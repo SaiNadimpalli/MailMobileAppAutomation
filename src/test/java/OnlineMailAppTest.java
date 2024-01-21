@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.sound.midi.InvalidMidiDataException;
 
+import org.checkerframework.checker.units.qual.h;
+import org.checkerframework.checker.units.qual.s;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -130,7 +132,9 @@ public class OnlineMailAppTest {
 
 	@Test
 	public void tapOnArchiveTabAndDownload() {
-		
+
+		WebElement homePage = driver.findElement(By.xpath("//android.widget.Button[@content-desc=\"Newspaper\"]/android.view.ViewGroup"));
+		homePage.click();
 		WebElement archiveTab = driver.findElement(By.xpath("//android.view.ViewGroup[@content-desc=\"Tap me to open the archive\"]/android.view.ViewGroup/android.view.ViewGroup"));
 		archiveTab.click();
 		WebElement downloadArchiveElement = driver.findElement(By.xpath("//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[2]/android.view.ViewGroup"));
@@ -141,17 +145,28 @@ public class OnlineMailAppTest {
 	public void signintopaywall(){
 
 		WebElement siginPage = driver.findElement(By.xpath("//android.widget.TextView[@text=\"Welcome to Mail+ Editions\"]"));
+		siginPage.click();
 
-		WebElement paywallElement = driver.findElement(By.xpath("//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[2]"));
+		WebElement paywallElement = driver.findElement(By.xpath("//android.widget.TextView[@text=\"Sign in to your Mail account\"]"));
 		paywallElement.click();
-		siginPage.isDisplayed();
-		WebElement emailElement = driver.findElement(By.xpath("//android.widget.EditText[@text=\"Email\"]"));
+		
+		WebElement emailElement = driver.findElement(By.xpath("//android.webkit.WebView[@text=\"Sign in or Register\"]/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View/android.view.View[2]/android.widget.EditText"));
 		emailElement.sendKeys("email");
-		WebElement passwordElement = driver.findElement(By.xpath("//android.widget.EditText[@text=\"Password\"]"));
-		passwordElement.sendKeys("password");
-		paywallElement.click();
 
-		Assert.assertTrue(siginPage.isDisplayed()==false);
+		WebElement passwordElement = driver.findElement(By.xpath("//android.webkit.WebView[@text=\"Sign in or Register\"]/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View/android.view.View[4]/android.widget.EditText"));
+		passwordElement.sendKeys("password");
+
+		WebElement signInButton = driver.findElement(By.xpath("//android.widget.Button[@text=\"Sign in\"]"));
+		signInButton.click();
+
+		WebElement homePageElement = driver.findElement(By.id("\t\n" + //
+				"Newspaper"));
+
+		
+
+
+
+		Assert.assertTrue(homePageElement.isDisplayed());
 
 
 		
